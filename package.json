@@ -1,0 +1,39 @@
+{
+  "name": "BusinessPartnerDetailsSrv",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "repository": "",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@cap-js/postgres": "^1.1.0",
+    "@sap/cds": "^7",
+    "express": "^4",
+    "@sap/cds-hana": "^2",
+    "@sap/low-code-event-handler": "^1.2.4",
+    "@sap/xsenv": ">=3.3.2 <3.3.3",
+    "@sap/xssec": "^3.6.1",
+    "cap-llm-plugin": "^1.4.4",
+    "hdb": "^0.19.8",
+    "passport": "^0.7.0"
+  },
+  "devDependencies": {
+    "@cap-js/sqlite": "^1",
+    "@sap/cds-dk": "^7"
+  },
+  "scripts": {
+    "start": "cds-serve"
+  },
+  "cds": {
+    "requires": {
+      "[production]": {
+        "db": {
+          "kind": "hana"
+        }
+      },
+      "auth": {
+        "kind": "dummy"
+      }
+    }
+  }
+}

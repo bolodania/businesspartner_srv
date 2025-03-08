@@ -1,0 +1,47 @@
+---
+_schema-version: '3.1'
+ID: BusinessPartnerDetailsSrv
+version: 1.0.2
+description: "A simple CAP project."
+parameters:
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        - npx cds build --production
+modules:
+  - name: BusinessPartnerDetailsSrv-srv
+    type: nodejs
+    path: gen/srv
+    parameters:
+      buildpack: nodejs_buildpack
+      disk-quota: 512MB
+      memory: 512MB
+    build-parameters:
+      builder: npm
+    provides:
+      - name: srv-api # required by consumers of CAP services (e.g. approuter)
+        properties:
+          srv-url: ${default-url}
+    requires:
+      - name: bp-srv-db
+
+  - name: BusinessPartnerDetailsSrv-db-deployer
+    type: hdb
+    path: gen/db
+    build-parameters:
+      builder: npm
+      ignore:
+        - node_modules
+        - package-lock.json
+    requires:
+      - name: bp-srv-db
+
+resources:
+  - name: bp-srv-db
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: hana
+      service-name: BusinessPartnerDetailsSrv-db
+      service-plan: hdi-shared
