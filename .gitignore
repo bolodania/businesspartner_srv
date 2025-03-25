@@ -9,6 +9,7 @@ gen/
 node_modules/
 target/
 env/
+package-lock.json
 
 # Web IDE, App Studio
 .che/
